@@ -11,7 +11,8 @@
 <meta property="og:site_name" content="شمس">
 <meta property="og:title" content="شمس — للتدعيم العاطفي بالقصة">
 <meta property="og:description" content="برنامج شمس للتدعيم العاطفي بالقصة: ورشات تربوية داخل المدرسة تعتمد على القصة ومنهجية GIVN، لتعزيز المشاعر والمهارات الاجتماعية ضمن إطار تدعيمي وليس علاجًا نفسيًا.">
-<meta property="og:image" content="og-cover.png">
+<meta property="og:url" content="https://shams-three.vercel.app/">
+<meta property="og:image" content="https://shams-three.vercel.app/og-cover.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -19,7 +20,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="شمس — للتدعيم العاطفي بالقصة">
 <meta name="twitter:description" content="ورشات تربوية داخل المدرسة: قصة، ثم أنشطة تفاعلية — تدعيم عاطفي وتربوي، وليس علاجًا نفسيًا.">
-<meta name="twitter:image" content="og-cover.png">
+<meta name="twitter:image" content="https://shams-three.vercel.app/og-cover.png">
 <meta name="twitter:image:alt" content="شمس — للتدعيم العاطفي بالقصة">
 <meta name="theme-color" content="#141B33">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -644,7 +645,7 @@ main>section[id]{scroll-margin-block-start:calc(var(--header-h) + 14px)}
 .presence-mat{position:relative;padding:clamp(11px,1.6vw,15px);background:var(--paper)}
 .presence-mat::after{content:"";position:absolute;inset:clamp(7px,1.1vw,11px);border:1px solid rgba(31,42,74,.14);pointer-events:none}
 .presence-portrait{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--deep)}
-.presence img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 12%;transform:scale(1.06);transform-origin:50% 18%}
+.presence img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 16%}
 .record{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(22px,3.5vw,40px);margin-top:clamp(24px,3.5vw,32px);padding-top:clamp(20px,3vw,28px);border-block-start:1px solid rgba(251,246,239,.18)}
 @media (min-width:720px){.record{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
 .record h3{margin:0 0 .4em;color:var(--peach);font-size:.96rem;font-weight:500}
@@ -709,7 +710,6 @@ html.js .atlas-item.is-in{opacity:1;transform:none;transition:opacity .62s var(-
 
 @media (max-width:900px){
   .founder-body:has(.presence:not([hidden])){grid-template-columns:minmax(0,1fr) minmax(168px,220px)}
-  .presence img{transform:scale(1.04)}
 }
 @media (max-width:800px){
   .hero h1{font-size:clamp(4rem,18vw,6rem)}
@@ -965,7 +965,7 @@ html.js .atlas-item.is-in{opacity:1;transform:none;transition:opacity .62s var(-
         <div class="presence-surface">
           <div class="presence-mat">
             <div class="presence-portrait">
-              <img src="heba.jpg" alt="هبة شيخ يوسف، مؤسِّسة برنامج شمس" width="590" height="640" decoding="async" onerror="this.closest('.presence').hidden=true" onload="this.closest('.presence').removeAttribute('hidden')">
+              <img src="/heba.jpg" alt="هبة شيخ يوسف، مؤسِّسة برنامج شمس" width="960" height="1688" loading="lazy" decoding="async" onerror="this.closest('.presence').hidden=true" onload="this.closest('.presence').removeAttribute('hidden')">
             </div>
           </div>
         </div>
