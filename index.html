@@ -4,7 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>شمس — للتدعيم العاطفي بالقصة</title>
+<link rel="icon" href="shams-logo.svg" type="image/svg+xml">
 <meta name="description" content="برنامج شمس للتدعيم العاطفي بالقصة: ورشات تربوية داخل المدرسة تعتمد على القصة ومنهجية GIVN، لتعزيز المشاعر والمهارات الاجتماعية ضمن إطار تدعيمي وليس علاجًا نفسيًا.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_AR">
+<meta property="og:site_name" content="شمس">
+<meta property="og:title" content="شمس — للتدعيم العاطفي بالقصة">
+<meta property="og:description" content="برنامج شمس للتدعيم العاطفي بالقصة: ورشات تربوية داخل المدرسة تعتمد على القصة ومنهجية GIVN، لتعزيز المشاعر والمهارات الاجتماعية ضمن إطار تدعيمي وليس علاجًا نفسيًا.">
+<meta property="og:image" content="og-cover.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="شمس — للتدعيم العاطفي بالقصة">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="شمس — للتدعيم العاطفي بالقصة">
+<meta name="twitter:description" content="ورشات تربوية داخل المدرسة: قصة، ثم أنشطة تفاعلية — تدعيم عاطفي وتربوي، وليس علاجًا نفسيًا.">
+<meta name="twitter:image" content="og-cover.png">
+<meta name="twitter:image:alt" content="شمس — للتدعيم العاطفي بالقصة">
 <meta name="theme-color" content="#141B33">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,6 +37,7 @@
   --ink:#2A2A33;
   --mist:#E4DED4;
   --line:rgba(31,42,74,.16);
+  --line-strong:rgba(31,42,74,.28);
   --text-accent:var(--orange);
   --text-accent-readable:var(--ember-ink);
   --display:"Aref Ruqaa","Noto Naskh Arabic","Amiri",serif;
@@ -31,11 +48,18 @@
   --space-4:32px;
   --space-5:48px;
   --space-6:64px;
+  --section-y:clamp(72px,10vw,124px);
   --measure-narrow:22em;
   --measure-prose:38ch;
+  --measure-editorial:min(40rem,100%);
   --g:clamp(22px,5vw,64px);
   --wrap:1120px;
+  --wrap-wide:1240px;
+  --header-h:4.375rem;
   --ease:cubic-bezier(.16,.84,.32,1);
+  --type-label:.82rem;
+  --type-body:clamp(1.02rem,.98rem + .18vw,1.1rem);
+  --type-lead:clamp(1.14rem,1.05rem + .35vw,1.28rem);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;overflow-x:clip;overscroll-behavior:none;scrollbar-width:thin;scrollbar-color:#1F2A4A #FBF6EF}
@@ -86,14 +110,13 @@ h1,h2,h3{font-family:var(--body);font-weight:500;line-height:1.35;margin:0;text-
 .scrolled .bar{padding-block:4px}
 .brand{display:flex;align-items:center;min-width:0;text-decoration:none;color:var(--paper)}
 .brand-lockup{display:grid;grid-template-columns:minmax(0,1fr);align-items:start;row-gap:.14rem;min-width:0}
-.brand b{
-  font:700 clamp(1.38rem,2.1vw,1.58rem)/1.05 var(--display);
-  color:var(--text-accent);
-  white-space:nowrap;
-  letter-spacing:-.01em;
-  transition:font-size .28s var(--ease)
+.brand-logo{
+  display:block;
+  height:clamp(1.55rem,2.35vw,1.78rem);
+  width:auto;
+  transition:height .28s var(--ease)
 }
-.scrolled .brand b{font-size:clamp(1.28rem,2vw,1.42rem)}
+.scrolled .brand-logo{height:clamp(1.42rem,2.1vw,1.58rem)}
 .brand-rule{display:none}
 .brand-tag{
   margin:0;
@@ -152,9 +175,20 @@ h1,h2,h3{font-family:var(--body);font-weight:500;line-height:1.35;margin:0;text-
   transition:transform .24s var(--ease),background .22s var(--ease)
 }
 .nav a:hover{color:var(--paper)}
-.nav a:hover::after,.nav a:focus-visible::after{transform:scaleX(1);background:rgba(246,201,168,.75)}
+.nav a:hover:not([aria-current="true"])::after,.nav a:focus-visible:not([aria-current="true"])::after{transform:scaleX(1);background:rgba(246,201,168,.75)}
 .nav a[aria-current="true"]{color:var(--peach);font-weight:500}
-.nav a[aria-current="true"]::after{transform:scaleX(1);background:var(--orange)}
+.nav a[aria-current="true"]::after{transform:scaleX(0)}
+.nav a[aria-current="true"]::before{
+  content:"";
+  position:absolute;
+  inset-inline-start:50%;
+  inset-block-end:2px;
+  width:5px;
+  height:5px;
+  margin-inline-start:-2.5px;
+  border-radius:50%;
+  background:var(--orange)
+}
 .nav a:focus-visible{outline:none;box-shadow:0 0 0 2px var(--deep),0 0 0 5px var(--orange)}
 .menu-btn{
   display:none;align-items:center;justify-content:center;gap:9px;
@@ -305,43 +339,111 @@ main>section[id]{scroll-margin-block-start:calc(var(--header-h) + 14px)}
 }
 
 /* —— Hero —— */
-.hero{padding-block:clamp(48px,8vw,80px) clamp(44px,7vw,88px)}
-.hero-stage{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(24px,4vw,36px);align-items:start;width:100%}
-.hero-col-display{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(10px,1.6vw,14px)}
-.hero h1{margin:0;color:var(--navy);font-family:var(--display);font-weight:700;font-size:clamp(4.2rem,15vw,7.25rem);line-height:.96;animation:arrive .6s var(--ease) both}
-.hero .def{margin:0;color:var(--text-accent-readable);font-weight:500;font-size:clamp(.98rem,1.1vw,1.08rem);line-height:1.5;max-width:16em;animation:arrive .55s .2s var(--ease) both}
-.hero-col-statement{max-width:34em}
-.hero .lead{margin:0;font-size:clamp(1.18rem,2.1vw,1.55rem);line-height:1.8;text-wrap:pretty;animation:arrive .6s .12s var(--ease) both}
-.hero .echo{font-family:var(--display);font-weight:700;color:var(--navy);font-size:1.04em}
+.hero{
+  position:relative;
+  padding-block:clamp(52px,9vw,96px) clamp(48px,8vw,92px);
+  background:var(--paper)
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset-inline:var(--g);
+  inset-block-end:0;
+  height:1px;
+  background:var(--line);
+  pointer-events:none
+}
+.hero-stage{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:clamp(28px,5vw,48px);
+  align-items:end;
+  width:100%;
+  max-width:var(--wrap-wide);
+  margin-inline:auto
+}
+.hero-col-display{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  column-gap:clamp(14px,2.5vw,22px);
+  align-items:end
+}
+.hero-mark{
+  width:3px;
+  height:clamp(4.5rem,14vw,7.5rem);
+  margin-block-end:.15em;
+  background:var(--orange);
+  border-radius:1px
+}
+.hero-title-block{min-width:0}
+.hero h1{margin:0;color:var(--navy);font-family:var(--display);font-weight:700;font-size:clamp(4.4rem,16vw,7.5rem);line-height:.94;animation:arrive .6s var(--ease) both}
+.hero .def{margin:.35rem 0 0;color:var(--text-accent-readable);font-weight:500;font-size:clamp(1rem,1.15vw,1.12rem);line-height:1.45;max-width:14em;text-wrap:balance;animation:arrive .55s .18s var(--ease) both}
+.hero-col-statement{max-width:36em}
+.hero .lead{margin:0;font-size:var(--type-lead);line-height:1.78;text-wrap:pretty;animation:arrive .6s .1s var(--ease) both}
+.hero .hero-context{
+  margin:1rem 0 0;
+  padding-block-start:1rem;
+  border-block-start:1px solid var(--line);
+  font-size:var(--type-body);
+  line-height:1.82;
+  color:var(--navy);
+  font-weight:400;
+  max-width:32em;
+  text-wrap:pretty;
+  animation:arrive .55s .26s var(--ease) both
+}
+.hero .echo{font-family:var(--display);font-weight:700;color:var(--navy);font-size:1.05em}
 @keyframes arrive{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media (min-width:768px){
-  .hero-stage{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:clamp(28px,5vw,48px);align-items:center}
-  .hero h1{font-size:clamp(4.5rem,11vw,6.75rem)}
-  .hero .lead{font-size:clamp(1.22rem,1.75vw,1.62rem)}
-  .hero-col-statement{padding-inline-start:clamp(20px,3.5vw,36px);border-inline-start:1px solid var(--line)}
+  .hero-stage{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);column-gap:clamp(32px,6vw,80px);align-items:end}
+  .hero h1{font-size:clamp(4.8rem,11vw,6.85rem)}
+  .hero-col-statement{padding-inline-start:clamp(24px,4vw,52px);border-inline-start:1px solid var(--line-strong)}
 }
 @media (min-width:1024px){
-  .hero{padding-block:clamp(56px,7vw,72px) clamp(48px,6vw,80px)}
-  .hero-stage{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);column-gap:clamp(36px,6vw,72px)}
-  .hero h1{font-size:clamp(5rem,8.5vw,7.25rem)}
-  .hero .lead{font-size:clamp(1.28rem,1.55vw,1.72rem);line-height:1.76;max-width:22em}
-  .hero-col-statement{padding-inline-start:clamp(28px,4vw,48px)}
+  .hero{padding-block:clamp(64px,8vw,104px) clamp(56px,7vw,88px)}
+  .hero h1{font-size:clamp(5.25rem,8.2vw,7.35rem)}
+  .hero .lead{font-size:clamp(1.26rem,1.5vw,1.62rem);line-height:1.76;max-width:24em}
+  .hero-col-statement{padding-inline-start:clamp(32px,5vw,64px)}
 }
 
 /* —— Story —— */
-.story{background:var(--peach);color:var(--deep);padding-block:clamp(88px,12vw,140px) clamp(64px,9vw,108px)}
-.story-inner{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(22px,3vw,32px);align-items:start}
-.story h2{max-width:7em;color:var(--deep);font-family:var(--display);font-weight:700;font-size:clamp(2.35rem,5.2vw,4rem);line-height:1.36}
+.story{color:var(--deep);padding-block:var(--section-y) clamp(64px,9vw,108px);background:var(--paper)}
+.story-inner{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(24px,3.5vw,40px);align-items:start}
+.story-head{max-width:11em}
+.story-idx{margin:0 0 .65rem;font:500 var(--type-label)/1 var(--body);color:var(--ember-ink);font-variant-numeric:tabular-nums}
+.story h2{margin:0;max-width:7em;color:var(--deep);font-family:var(--display);font-weight:700;font-size:clamp(2.35rem,5.2vw,4rem);line-height:1.32}
+.story-main{display:grid;gap:clamp(20px,3vw,28px)}
 .story .txt{max-width:var(--measure-prose)}
-.story .txt p{font-size:clamp(1.05rem,1.22vw,1.16rem);line-height:1.95}
-.bridge{max-width:var(--measure-narrow);font-weight:500;font-size:clamp(1.18rem,1.75vw,1.42rem);line-height:1.78;color:var(--deep)}
+.story .txt p{font-size:var(--type-body);line-height:1.92}
+.story .bridge p{margin:0}
+.story .bridge{
+  margin:0;
+  padding:0;
+  border:none;
+  max-width:var(--measure-editorial);
+  font-family:var(--display);
+  font-weight:700;
+  font-size:clamp(1.35rem,2.4vw,1.85rem);
+  line-height:1.55;
+  color:var(--deep);
+  text-wrap:balance
+}
+.story-practice{
+  max-width:var(--measure-prose);
+  font-weight:500;
+  font-size:var(--type-body);
+  line-height:1.88;
+  color:var(--deep);
+  padding-inline-start:clamp(14px,2vw,20px);
+  border-inline-start:2px solid rgba(181,68,15,.35)
+}
 @media (min-width:900px){
-  .story-inner{grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);column-gap:clamp(36px,6vw,80px);row-gap:clamp(24px,3.5vw,36px)}
-  .story h2{grid-row:span 2;align-self:end;padding-block-end:var(--space-2)}
+  .story-inner{grid-template-columns:minmax(0,.38fr) minmax(0,.62fr);column-gap:clamp(40px,7vw,96px);row-gap:clamp(20px,3vw,32px);align-items:start}
+  .story-head{position:sticky;top:calc(var(--header-h) + 20px);align-self:start;padding-block-start:.25rem}
 }
 
 /* —— Program (about) —— */
-.program{padding-block:clamp(72px,10vw,120px) clamp(56px,8vw,96px);background:linear-gradient(180deg,var(--paper) 0%,rgba(251,246,239,.6) 40%,var(--paper) 100%)}
+.program{padding-block:var(--section-y);background:var(--paper)}
 .lede{max-width:var(--measure-prose);margin-top:1rem;line-height:1.9}
 .prog-block{margin:0}
 .prog-block + .prog-block{margin-top:clamp(56px,8vw,96px);padding-top:0;border-block-start:none}
@@ -351,12 +453,18 @@ main>section[id]{scroll-margin-block-start:calc(var(--header-h) + 14px)}
 .prog-why h2{max-width:9.5em;color:var(--navy);font-family:var(--display);font-weight:700;font-size:clamp(2.1rem,4.2vw,3.35rem);line-height:1.32}
 .prog-manifesto{margin:0;color:var(--navy);font-family:var(--display);font-weight:700;font-size:clamp(1.45rem,2.75vw,2.35rem);line-height:1.5;text-wrap:balance}
 .prog-manifesto em{font-style:normal;color:var(--text-accent-readable)}
+.prog-distinct{margin:clamp(14px,2vw,20px) 0 0;font-size:clamp(1.02rem,1.12vw,1.1rem);line-height:1.88;max-width:var(--measure-prose);color:var(--ink)}
 @media (min-width:880px){
   .prog-manifesto-layout{grid-template-columns:minmax(0,.46fr) minmax(0,.54fr);column-gap:clamp(40px,7vw,80px);row-gap:clamp(12px,2vw,20px)}
   .prog-manifesto-head{align-self:end}
   .prog-manifesto{font-size:clamp(1.55rem,2.2vw,2.5rem);max-width:20em}
 }
-.prog-method-panel{padding:clamp(28px,4vw,44px) clamp(22px,3.5vw,36px);background:rgba(246,201,168,.14);outline:1px solid rgba(31,42,74,.07);outline-offset:-1px}
+.prog-method-panel{
+  padding:clamp(28px,4vw,48px) clamp(22px,3.5vw,40px);
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-inline-start:4px solid var(--orange)
+}
 .prog-how-head{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(18px,2.8vw,28px);align-items:start;padding-block-end:clamp(22px,3vw,32px);border-block-end:1px solid rgba(31,42,74,.12)}
 @media (min-width:960px){
   .prog-how-head{grid-template-columns:minmax(9.5rem,12.5rem) minmax(0,1fr);column-gap:clamp(36px,5vw,56px);align-items:end}
@@ -365,17 +473,46 @@ main>section[id]{scroll-margin-block-start:calc(var(--header-h) + 14px)}
 .givn{display:block;color:var(--navy);font-family:var(--body);font-weight:500;font-size:clamp(2.15rem,3.8vw,3rem);letter-spacing:.07em;line-height:1;margin-top:.4rem;border-block-end:3px solid var(--text-accent);padding-block-end:.12em;width:fit-content}
 .prog-how-note{max-width:var(--measure-prose);margin:0;line-height:1.88;font-size:clamp(1.02rem,1.12vw,1.1rem)}
 .act-flow{margin-top:clamp(26px,3.5vw,36px)}
-.act-axis{margin-bottom:0;padding-block-end:clamp(20px,3vw,28px);border-block-end:1px solid var(--line);text-align:center}
-.act-origin{margin:0 0 .35rem;color:var(--navy);font-family:var(--display);font-weight:700;font-size:clamp(2rem,3.8vw,2.75rem);line-height:1.15}
-.act-bridge{margin:0 auto;max-width:26rem;color:var(--text-accent-readable);font-weight:500;font-size:clamp(.92rem,1.05vw,1rem);line-height:1.62}
-.act-ring{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:clamp(4px,1vw,8px)}
-.act-ring .act{margin:0;padding:clamp(13px,1.7vw,17px) clamp(10px,1.4vw,14px);color:var(--navy);font-weight:500;font-size:clamp(1.02rem,1.2vw,1.12rem);line-height:1.48;text-align:center;border-block-end:1px solid var(--line);border-inline-start:1px solid var(--line);background:rgba(251,246,239,.55)}
-.act-ring .act:nth-child(odd){border-inline-start:none}
-.act-collective{margin:0;padding:clamp(16px,2.2vw,20px) clamp(12px,2vw,16px);border-block-start:2px solid var(--navy);color:var(--navy);font-weight:500;font-size:clamp(1.12rem,1.45vw,1.26rem);line-height:1.45;text-align:center;background:rgba(31,42,74,.04)}
-@media (min-width:640px){
+.act-axis{
+  margin-bottom:clamp(18px,2.5vw,24px);
+  padding-inline-start:clamp(16px,2.5vw,24px);
+  border-inline-start:3px solid var(--navy);
+  text-align:start
+}
+.act-origin{margin:0 0 .35rem;color:var(--navy);font-family:var(--display);font-weight:700;font-size:clamp(2rem,3.8vw,2.75rem);line-height:1.12}
+.act-bridge{margin:0;max-width:28rem;color:var(--text-accent-readable);font-weight:500;font-size:clamp(.92rem,1.05vw,1rem);line-height:1.62}
+.act-ring{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(8px,1.2vw,12px);
+  margin-top:clamp(8px,1.2vw,12px)
+}
+.act-ring .act{
+  margin:0;
+  padding:clamp(14px,2vw,18px) clamp(12px,1.6vw,16px);
+  color:var(--navy);
+  font-weight:500;
+  font-size:clamp(1rem,1.15vw,1.1rem);
+  line-height:1.45;
+  text-align:start;
+  background:var(--paper);
+  border:1px solid var(--line)
+}
+.act-ring .act:nth-child(3),.act-ring .act:nth-child(6){background:rgba(31,42,74,.04)}
+.act-collective{
+  margin:clamp(10px,1.5vw,14px) 0 0;
+  padding:clamp(14px,2vw,18px) clamp(14px,2vw,20px);
+  border:1px solid var(--navy);
+  color:var(--navy);
+  font-weight:500;
+  font-size:clamp(1.08rem,1.35vw,1.22rem);
+  line-height:1.45;
+  text-align:start;
+  background:transparent
+}
+@media (min-width:720px){
   .act-ring{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .act-ring .act:nth-child(odd){border-inline-start:1px solid var(--line)}
-  .act-ring .act:nth-child(3n+1){border-inline-start:none}
+  .act-ring .act:nth-child(2){grid-column:span 2}
 }
 .prog-base-inner{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(32px,5vw,48px);align-items:start}
 @media (min-width:960px){
@@ -390,7 +527,7 @@ main>section[id]{scroll-margin-block-start:calc(var(--header-h) + 14px)}
 .base-title{display:block;color:var(--ink);font-weight:500;line-height:1.52}
 .base-term{display:block;color:var(--text-accent-readable);font-size:clamp(.8rem,.88vw,.88rem);font-weight:500;line-height:1.35;letter-spacing:.03em;white-space:nowrap}
 .base-term:empty{visibility:hidden}
-.prog-frame{width:100%;margin-top:clamp(24px,3.2vw,32px);padding:clamp(18px,2.4vw,22px) clamp(20px,2.8vw,26px);border-inline-start:3px solid var(--peach);color:var(--ink);font-size:clamp(1.03rem,1.12vw,1.08rem);line-height:1.9;background:rgba(246,201,168,.18)}
+.prog-frame{width:100%;margin-top:clamp(24px,3.2vw,32px);padding:clamp(18px,2.4vw,22px) clamp(20px,2.8vw,26px);border-inline-start:3px solid var(--orange);color:var(--ink);font-size:clamp(1.03rem,1.12vw,1.08rem);line-height:1.9;background:var(--paper);outline:1px solid var(--line);outline-offset:-1px}
 @media (max-width:560px){
   .base-list li{grid-template-columns:2.5rem minmax(0,1fr);gap:10px 14px}
   .base-term{grid-column:2;margin-top:.15em;white-space:normal}
@@ -415,32 +552,82 @@ main>section[id]{scroll-margin-block-start:calc(var(--header-h) + 14px)}
 .fact-band span{display:block;margin-top:.3em;color:var(--ink);font-weight:400;font-size:clamp(.88rem,1vw,.96rem);line-height:1.55}
 
 /* —— Atlas (six topics) —— */
-.areas{padding-block:clamp(56px,7vw,80px) clamp(72px,9vw,112px);background:linear-gradient(180deg,var(--paper) 0%,rgba(246,201,168,.2) 55%,var(--paper) 100%)}
-.areas-kicker{margin:0 0 .45rem;color:var(--text-accent-readable);font-weight:500;font-size:clamp(.92rem,1.05vw,1rem)}
-.areas h2{margin-bottom:clamp(28px,4vw,44px);max-width:18em;color:var(--navy);font-size:clamp(1.32rem,1.95vw,1.62rem);font-weight:500}
-.atlas{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(14px,2vw,20px)}
-.atlas-item{padding:clamp(18px,2.5vw,24px) 0;border-block-start:1px solid var(--line)}
-.atlas-item h3{margin:0 0 6px;color:var(--navy);font-size:clamp(1.16rem,1.5vw,1.38rem);font-weight:500;line-height:1.42}
-.atlas-item p{margin:0;max-width:var(--measure-prose);font-size:clamp(1.02rem,1.1vw,1.07rem);line-height:1.84}
-.atlas-grief{padding:clamp(32px,4.5vw,48px) clamp(4px,1vw,8px);border-block:1px solid rgba(31,42,74,.2);background:rgba(251,246,239,.45)}
-.atlas-grief h3{font-family:var(--display);font-weight:700;font-size:clamp(1.42rem,2.3vw,1.75rem);line-height:1.34;margin-bottom:10px}
-.atlas-grief p{max-width:42rem;font-size:clamp(1.04rem,1.15vw,1.1rem);line-height:1.9}
+.areas{
+  padding-block:var(--section-y);
+  background:var(--paper);
+  border-block:1px solid var(--line)
+}
+.areas-intro{max-width:var(--measure-editorial);margin-bottom:clamp(36px,5vw,56px)}
+.areas-kicker{margin:0 0 .45rem;color:var(--text-accent-readable);font-weight:500;font-size:var(--type-label);letter-spacing:.04em}
+.areas h2{margin:0;max-width:16em;color:var(--navy);font-family:var(--display);font-weight:700;font-size:clamp(1.75rem,3.2vw,2.45rem);line-height:1.32}
+.areas .areas-lede{margin:1rem 0 0;max-width:var(--measure-prose);line-height:1.88;font-size:var(--type-body)}
+.atlas{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+.atlas-item{
+  padding:clamp(22px,3vw,30px) 0;
+  border-block-start:1px solid var(--line);
+  display:grid;
+  gap:6px;
+  align-content:start
+}
+.atlas-item h3{margin:0;color:var(--navy);font-size:clamp(1.14rem,1.45vw,1.32rem);font-weight:500;line-height:1.4}
+.atlas-item p{margin:0;max-width:42ch;font-size:var(--type-body);line-height:1.84;color:var(--ink)}
+.atlas-confidence{padding-block-start:0;border-block-start:none}
+.atlas-confidence h3{font-family:var(--display);font-weight:700;font-size:clamp(1.35rem,2vw,1.65rem)}
+.atlas-grief{
+  padding:clamp(28px,4vw,40px) clamp(18px,3vw,28px);
+  margin-block:clamp(8px,1.5vw,12px);
+  border:1px solid var(--line-strong);
+  background:var(--paper)
+}
+.atlas-grief h3{font-family:var(--display);font-weight:700;font-size:clamp(1.42rem,2.3vw,1.75rem);line-height:1.34}
+.atlas-grief p{max-width:48ch;line-height:1.9}
 @media (min-width:768px){
-  .atlas{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(24px,4vw,40px)}
-  .atlas-confidence{grid-column:1/-1;padding-block-end:clamp(8px,1.5vw,12px)}
+  .atlas{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:clamp(20px,3vw,32px)}
+  .atlas-confidence{grid-column:1/8;padding-block-end:clamp(12px,2vw,20px)}
+  .atlas-social{grid-column:8/-1;border-block-start:none;padding-block-start:0}
+  .atlas-emotion{grid-column:1/7}
+  .atlas-belong{grid-column:7/-1}
+  .atlas-safety{grid-column:1/6}
   .atlas-grief{grid-column:1/-1}
 }
 
 /* —— Workshop sequence —— */
-.method{padding-block:clamp(56px,7vw,80px) clamp(72px,10vw,112px)}
-.method h2{margin:0;max-width:11em;color:var(--navy);font-family:var(--display);font-weight:700;font-size:clamp(1.95rem,3.8vw,2.85rem);line-height:1.36}
-.method .lede{margin-top:clamp(12px,2vw,18px);max-width:var(--measure-prose);line-height:1.88}
-.sequence-rail{margin:clamp(28px,4vw,44px) 0 0;padding:0;list-style:none;position:relative;padding-inline-end:clamp(12px,2vw,20px)}
+.method{
+  padding-block:var(--section-y);
+  background:var(--paper);
+  border-block-start:1px solid var(--line)
+}
+.method-head{max-width:var(--measure-editorial)}
+.method h2{margin:0;max-width:11em;color:var(--navy);font-family:var(--display);font-weight:700;font-size:clamp(1.95rem,3.8vw,2.85rem);line-height:1.32}
+.method .lede{margin-top:clamp(12px,2vw,18px);max-width:var(--measure-prose);line-height:1.88;font-size:var(--type-body)}
+.sequence-rail{margin:clamp(32px,5vw,52px) 0 0;padding:0;list-style:none;position:relative;padding-inline-end:clamp(12px,2vw,20px)}
 .sequence-rail::before{content:"";position:absolute;inset-inline-end:clamp(1.1rem,2.2vw,1.35rem);inset-block:1.2em calc(1.2em + 4px);width:1px;background:var(--line)}
-.path-step{display:grid;grid-template-columns:clamp(2.4rem,4vw,3rem) minmax(0,1fr);gap:clamp(12px,2vw,24px) clamp(16px,3vw,32px);align-items:start;padding-block:clamp(20px,2.8vw,28px)}
+.path-step{
+  display:grid;
+  grid-template-columns:clamp(2.4rem,4vw,3rem) minmax(0,1fr);
+  gap:clamp(12px,2vw,24px) clamp(16px,3vw,32px);
+  align-items:start;
+  padding-block:clamp(20px,2.8vw,28px);
+  border-block-end:1px solid var(--line)
+}
+.path-step:last-child{border-block-end:none}
 .path-num{margin:0;color:var(--text-accent);font-family:var(--display);font-weight:700;font-size:clamp(1.75rem,3vw,2.35rem);line-height:1;text-align:end;position:relative;z-index:1}
-.path-body h3{margin:0 0 .3em;color:var(--navy);font-size:clamp(1.12rem,1.45vw,1.28rem);font-weight:500;line-height:1.4}
-.path-body p{margin:0;max-width:50ch;line-height:1.86}
+.path-body h3{margin:0 0 .35em;color:var(--navy);font-size:clamp(1.12rem,1.45vw,1.28rem);font-weight:500;line-height:1.4}
+.path-body p{margin:0;max-width:50ch;line-height:1.86;font-size:var(--type-body)}
+@media (min-width:1024px){
+  .sequence-rail{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,2.5vw,28px);padding-inline-end:0}
+  .sequence-rail::before{display:none}
+  .path-step{
+    grid-template-columns:1fr;
+    gap:10px;
+    padding:clamp(18px,2vw,24px) clamp(14px,2vw,20px);
+    border-block-end:none;
+    border-block-start:2px solid var(--line);
+    min-height:100%
+  }
+  .path-step:first-child{border-block-start-color:var(--orange)}
+  .path-num{text-align:start;font-size:clamp(1.5rem,2.2vw,2rem)}
+}
 
 /* —— Founder —— */
 .founder{background:var(--navy);color:var(--paper);padding-block:clamp(72px,10vw,112px)}
@@ -450,12 +637,13 @@ main>section[id]{scroll-margin-block-start:calc(var(--header-h) + 14px)}
 .founder h2{margin:.15em 0 0;color:var(--paper);font-family:var(--display);font-weight:700;font-size:clamp(2.5rem,5.2vw,4.5rem);line-height:1.18}
 .founder-body{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(24px,4vw,36px);align-items:start}
 .founder-body:has(.presence:not([hidden])){grid-template-columns:minmax(0,1fr) minmax(200px,min(300px,34vw));column-gap:clamp(32px,5.5vw,72px);align-items:start}
+.founder-lede{margin:0 0 1rem;max-width:var(--measure-prose);color:var(--peach);font-weight:500;font-size:clamp(.98rem,1.08vw,1.06rem);line-height:1.78}
 .now{max-width:var(--measure-prose);margin:0;color:rgba(228,222,212,.95);font-size:clamp(1.04rem,1.2vw,1.14rem);line-height:1.9}
 .presence{margin:0;width:100%;max-width:min(300px,100%);justify-self:end;align-self:start}
-.presence-surface{padding:1px;background:linear-gradient(165deg,rgba(246,201,168,.92) 0%,rgba(232,116,44,.45) 42%,rgba(246,201,168,.78) 100%);box-shadow:0 20px 40px rgba(14,18,32,.28)}
+.presence-surface{padding:0;border:1px solid rgba(246,201,168,.45);background:var(--paper)}
 .presence-mat{position:relative;padding:clamp(11px,1.6vw,15px);background:var(--paper)}
 .presence-mat::after{content:"";position:absolute;inset:clamp(7px,1.1vw,11px);border:1px solid rgba(31,42,74,.14);pointer-events:none}
-.presence-portrait{position:relative;aspect-ratio:4/5;overflow:hidden;background:linear-gradient(180deg,rgba(31,42,74,.08),var(--deep))}
+.presence-portrait{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--deep)}
 .presence img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 12%;transform:scale(1.06);transform-origin:50% 18%}
 .record{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(22px,3.5vw,40px);margin-top:clamp(24px,3.5vw,32px);padding-top:clamp(20px,3vw,28px);border-block-start:1px solid rgba(251,246,239,.18)}
 @media (min-width:720px){.record{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
@@ -465,15 +653,45 @@ main>section[id]{scroll-margin-block-start:calc(var(--header-h) + 14px)}
 .record .open{color:var(--mist)}
 
 /* —— Close & footer —— */
-.close{background:var(--deep);color:var(--paper);padding-block:clamp(56px,8vw,88px) clamp(40px,6vw,64px)}
-.close-inner{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(24px,3.5vw,32px);align-items:end}
-.close h2{max-width:13em;color:var(--paper);font-family:var(--display);font-weight:700;font-size:clamp(2rem,4.2vw,3.15rem);line-height:1.4}
-.close .s{max-width:var(--measure-prose);color:rgba(246,201,168,.95);font-size:clamp(1.06rem,1.5vw,1.26rem);line-height:1.88}
-.site-footer{background:var(--deep);color:rgba(228,222,212,.88);border-block-start:1px solid rgba(246,201,168,.15);padding-block:22px 28px}
-.foot{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between}
-.foot b{color:var(--text-accent);font:700 1.35rem/1.2 var(--display)}
-.foot ul{display:flex;flex-wrap:wrap;gap:4px 14px;margin:0;padding:0;list-style:none}
-.foot a{display:inline-block;padding-block:10px;font-size:.9rem;text-decoration:none;transition:color .28s var(--ease)}
+.close{
+  background:var(--paper);
+  color:var(--ink);
+  padding-block:clamp(64px,9vw,100px) clamp(48px,7vw,72px);
+  border-block-start:4px solid var(--orange)
+}
+.close-inner{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(20px,3vw,28px);max-width:var(--measure-editorial)}
+.close h2{margin:0;max-width:14em;color:var(--navy);font-family:var(--display);font-weight:700;font-size:clamp(2rem,4.2vw,3.05rem);line-height:1.38}
+.close .s{max-width:var(--measure-prose);color:var(--ink);font-size:var(--type-lead);line-height:1.85;font-weight:400}
+.close-actions{margin-top:clamp(22px,3.5vw,32px)}
+.wa-cta{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  min-height:48px;
+  padding:12px clamp(20px,3vw,26px);
+  background:var(--navy);
+  color:var(--paper);
+  font:500 var(--type-body)/1.4 var(--body);
+  text-decoration:none;
+  border:1px solid var(--navy);
+  transition:background .22s var(--ease),border-color .22s var(--ease),color .22s var(--ease)
+}
+.wa-cta:hover,.wa-cta:focus-visible{background:var(--orange);border-color:var(--orange);color:var(--paper)}
+.wa-icon{width:20px;height:20px;flex:none}
+.close-wa-hint{margin:.75rem 0 0;font-size:var(--type-label);color:var(--text-accent-readable);line-height:1.5}
+.foot a.wa-foot-link{color:var(--peach);font-weight:500}
+.site-footer{background:var(--deep);color:rgba(228,222,212,.88);padding-block:clamp(28px,4vw,40px) clamp(24px,3vw,32px)}
+.foot{display:grid;gap:clamp(16px,2.5vw,22px)}
+@media (min-width:720px){
+  .foot{grid-template-columns:minmax(0,auto) minmax(0,1fr);align-items:center;column-gap:clamp(24px,4vw,48px)}
+}
+.foot-brand{display:grid;gap:4px}
+.foot b{color:var(--text-accent);font:700 clamp(1.25rem,2vw,1.45rem)/1.15 var(--display)}
+.foot-tag{margin:0;font-size:var(--type-label);color:rgba(246,201,168,.75);line-height:1.45}
+.foot ul{display:flex;flex-wrap:wrap;gap:6px clamp(10px,2vw,18px);margin:0;padding:0;list-style:none;justify-content:flex-start}
+@media (min-width:720px){.foot ul{justify-content:flex-end}}
+.foot a{display:inline-block;padding-block:8px;font-size:.88rem;text-decoration:none;transition:color .22s var(--ease)}
 .foot a:hover,.foot a:focus-visible{color:var(--peach)}
 
 /* —— Motion (JS-enhanced only) —— */
@@ -511,7 +729,7 @@ html.js .atlas-item.is-in{opacity:1;transform:none;transition:opacity .62s var(-
 }
 @media (min-width:1440px){
   .wrap{max-width:min(var(--wrap),calc(100% - 2 * var(--g)))}
-  .hero .lead,.story .txt p,.bridge{max-width:36ch}
+  .hero .lead,.story .txt p,.story .bridge p{max-width:36ch}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
@@ -527,7 +745,7 @@ html.js .atlas-item.is-in{opacity:1;transform:none;transition:opacity .62s var(-
 <header class="site-header" id="top">
   <div class="wrap bar">
     <a class="brand" href="#hero" aria-label="شمس — للتدعيم العاطفي بالقصة">
-      <span class="brand-lockup"><b>شمس</b><i class="brand-rule" aria-hidden="true"></i><span class="brand-tag">للتدعيم العاطفي بالقصة</span></span>
+      <span class="brand-lockup"><img class="brand-logo" src="shams-logo.svg" alt="" width="138" height="128" decoding="async"><i class="brand-rule" aria-hidden="true"></i><span class="brand-tag">للتدعيم العاطفي بالقصة</span></span>
     </a>
     <nav class="nav" aria-label="التنقل الرئيسي">
       <ul>
@@ -563,20 +781,30 @@ html.js .atlas-item.is-in{opacity:1;transform:none;transition:opacity .62s var(-
 <section class="hero" id="hero" aria-labelledby="hero-name">
   <div class="wrap hero-stage">
     <div class="hero-col-display">
-      <h1 id="hero-name">شمس</h1>
-      <p class="def">للتدعيم العاطفي بالقصة</p>
+      <span class="hero-mark" aria-hidden="true"></span>
+      <div class="hero-title-block">
+        <h1 id="hero-name">شمس</h1>
+        <p class="def">للتدعيم العاطفي بالقصة</p>
+      </div>
     </div>
     <div class="hero-col-statement">
       <p class="lead">لكل طفلٍ عالمُ مشاعرَ يستحق أن يُكتشف، و<span class="echo">شمس</span> ترافقه في رحلته عبر القصة.</p>
+      <p class="hero-context">برنامج ورشات تربوية داخل المدرسة: قصة، ثم أنشطة تفاعلية مع الأطفال في الصف أو في مجموعات صغيرة — تدعيم عاطفي وتربوي، وليس علاجًا نفسيًا.</p>
     </div>
   </div>
 </section>
 
 <section class="story" id="story" aria-labelledby="story-title">
   <div class="wrap story-inner">
-    <h2 class="story-line" id="story-title">حين تصبح القصة مساحة للمشاعر</h2>
-    <div class="txt story-line"><p>في عالم القصة، يجد الطفل ما يشبهه: مشاعر عاشها، ومواقف مرّ بها، وأسئلة لم يعرف كيف يعبّر عنها. ومن خلال الشخصيات وأحداثها، نمنح الطفل مساحة آمنة ليفهم مشاعره، ويكتشف ذاته، ويرى المواقف بعيون الآخرين، ويتعلّم طرقاً جديدة للتعامل مع تحدياته.</p></div>
-    <p class="bridge story-line">فالقصة في برنامجنا ليست مجرد حكاية نرويها، بل جسر نعبر من خلاله إلى عالم الطفل العاطفي.</p>
+    <header class="story-head story-line">
+      <p class="story-idx" aria-hidden="true">٠١ — القصة</p>
+      <h2 id="story-title">حين تصبح القصة مساحة للمشاعر</h2>
+    </header>
+    <div class="story-main">
+      <div class="txt story-line"><p>في عالم القصة، يجد الطفل ما يشبهه: مشاعر عاشها، ومواقف مرّ بها، وأسئلة لم يعرف كيف يعبّر عنها. ومن خلال الشخصيات وأحداثها، نمنح الطفل مساحة آمنة ليفهم مشاعره، ويكتشف ذاته، ويرى المواقف بعيون الآخرين، ويتعلّم طرقاً جديدة للتعامل مع تحدياته.</p></div>
+      <blockquote class="bridge story-line"><p>فالقصة في برنامجنا ليست مجرد حكاية نرويها، بل جسر نعبر من خلاله إلى عالم الطفل العاطفي.</p></blockquote>
+      <p class="story-line story-practice">ومن هناك ننتقل إلى ما يمارسه الأطفال: حوار، لعب، تعبير فني وحركة — لتسمية المشاعر، وتجربتها في مجموعة آمنة، بعيدًا عن الحكم أو التصنيف.</p>
+    </div>
   </div>
 </section>
 
@@ -588,7 +816,10 @@ html.js .atlas-item.is-in{opacity:1;transform:none;transition:opacity .62s var(-
           <p class="prog-kicker">عن البرنامج</p>
           <h2 id="about-title">القصة طريقٌ إلى الداخل</h2>
         </header>
-        <p class="prog-manifesto">يتعامل برنامج شمس مع القصة بوصفها <em>وسيلة لفهم العالم الداخلي للطفل</em>، لا كأداة تعليمية فقط.</p>
+        <div class="prog-manifesto-col">
+          <p class="prog-manifesto">يتعامل برنامج شمس مع القصة بوصفها <em>وسيلة لفهم العالم الداخلي للطفل</em>، لا كأداة تعليمية فقط.</p>
+          <p class="prog-distinct">ما يميّز البرنامج في المدرسة أن القصة نقطة انطلاق منظّمة: تُختار لتلامس تجربة الأطفال، ثم تُتابع بسلسلة أنشطة تفاعلية وفق منهجية GIVN — بما يخدم أهداف الصف والإدارة، ويكمل دور المعلم دون ادعاء دور علاجي.</p>
+        </div>
       </div>
     </div>
 
@@ -650,8 +881,11 @@ html.js .atlas-item.is-in{opacity:1;transform:none;transition:opacity .62s var(-
 
 <section class="areas" id="areas" aria-labelledby="areas-title">
   <div class="wrap">
-    <p class="areas-kicker">المساحات التربوية</p>
-    <h2 id="areas-title">ما الذي نعمل عليه مع الأطفال؟</h2>
+    <header class="areas-intro">
+      <p class="areas-kicker">المساحات التربوية</p>
+      <h2 id="areas-title">ما الذي نعمل عليه مع الأطفال؟</h2>
+      <p class="areas-lede">يُختار المجال بحسب احتياج الصف أو المدرسة. في كل ورشة تبدأ القصة، ثم تُبنى حولها أنشطة تساعد الأطفال على فهم مشاعرهم، والتعبير عنها، والتعامل مع المواقف اليومية — ضمن إطار تدعيمي واضح.</p>
+    </header>
     <div class="atlas">
       <article class="atlas-item atlas-confidence"><h3>تعزيز الثقة بالذات</h3><p>للأطفال الخجولين والانطوائيين، أو الذين يصعب عليهم التعبير عن أنفسهم أمام الصف.</p></article>
       <article class="atlas-item atlas-social"><h3>المهارات الاجتماعية</h3><p>لتقوية العلاقات الصحية والتواصل الإيجابي بين الأطفال وأقرانهم.</p></article>
@@ -665,8 +899,10 @@ html.js .atlas-item.is-in{opacity:1;transform:none;transition:opacity .62s var(-
 
 <section class="method" id="method" aria-labelledby="method-title">
   <div class="wrap reveal reveal-quiet">
-    <h2 id="method-title">كيف تشتغل الورشة</h2>
-    <p class="lede">أربع لحظات متصلة في تجربة واحدة — وليست جدولًا زمنيًا مفروضًا.</p>
+    <header class="method-head">
+      <h2 id="method-title">كيف تشتغل الورشة</h2>
+      <p class="lede">أربع لحظات متصلة في تجربة واحدة داخل المدرسة — تُنسَّق مع الإدارة والمعلم، وليست جدولًا زمنيًا جامدًا يُفرَض على الصف.</p>
+    </header>
     <ol class="sequence-rail">
       <li class="path-step">
         <p class="path-num" aria-hidden="true">١</p>
@@ -679,7 +915,7 @@ html.js .atlas-item.is-in{opacity:1;transform:none;transition:opacity .62s var(-
         <p class="path-num" aria-hidden="true">٢</p>
         <div class="path-body">
           <h3>الأنشطة</h3>
-          <p>تُبنى حول القصة أنشطة تفاعلية وفق منهجية GIVN — كما في قسم «عن البرنامج» أعلاه.</p>
+          <p>تُبنى حول القصة أنشطة تفاعلية — لعب، فن، حركة، حوار — وفق منهجية GIVN، بما يخدم هدف الورشة في الصف.</p>
         </div>
       </li>
       <li class="path-step">
@@ -708,7 +944,8 @@ html.js .atlas-item.is-in{opacity:1;transform:none;transition:opacity .62s var(-
     </div>
     <div class="founder-body reveal reveal-quiet">
       <div class="founder-copy">
-        <p class="now">تعمل حالياً كمستشارة تربوية، وتجمع في عملها بين الخلفية الأكاديمية والخبرة الميدانية المباشرة مع الأطفال.</p>
+        <p class="founder-lede">لصاحب القرار في المدرسة: البرنامج يقف على أسس أكاديمية وخبرة ميدانية مع الأطفال — لا على وعود عامة بلا إطار.</p>
+        <p class="now">تعمل حالياً كمستشارة تربوية، وتجمع في عملها بين الخلفية الأكاديمية والخبرة الميدانية المباشرة مع الأطفال داخل البيئة المدرسية.</p>
         <div class="record">
           <div>
             <h3>الدراسة</h3>
@@ -728,7 +965,7 @@ html.js .atlas-item.is-in{opacity:1;transform:none;transition:opacity .62s var(-
         <div class="presence-surface">
           <div class="presence-mat">
             <div class="presence-portrait">
-              <img src="nawal.png" alt="هبة شيخ يوسف، مؤسِّسة برنامج شمس" width="590" height="640" decoding="async" onerror="this.closest('.presence').hidden=true" onload="this.closest('.presence').removeAttribute('hidden')">
+              <img src="heba.jpg" alt="هبة شيخ يوسف، مؤسِّسة برنامج شمس" width="590" height="640" decoding="async" onerror="this.closest('.presence').hidden=true" onload="this.closest('.presence').removeAttribute('hidden')">
             </div>
           </div>
         </div>
@@ -740,8 +977,15 @@ html.js .atlas-item.is-in{opacity:1;transform:none;transition:opacity .62s var(-
 <section class="close" id="close" aria-labelledby="close-title">
   <div class="wrap close-inner reveal reveal-quiet">
     <div class="close-copy">
-      <h2 id="close-title">هل نبدأ هذه الرحلة مع أطفالكم؟</h2>
-      <p class="s">نبدأ مع الأطفال من القصة، في الصف أو في مجموعة صغيرة، ضمن إطار تربوي وتدعيمي.</p>
+      <h2 id="close-title">لنتحدث عن تطبيق البرنامج في مدرستكم</h2>
+      <p class="s">نرحب بحوار إدارات المدارس والمستشارين التربويين: ما الاحتياج في الصف؟ ما الشكل الأنسب — صف كامل أم مجموعة صغيرة؟ من هنا ننسّق الخطوة التالية معًا، من القصة إلى الأنشطة، ضمن الإطار التدعيمي للبرنامج.</p>
+      <div class="close-actions">
+        <a class="wa-cta" id="waCta" href="https://wa.me/" rel="noopener noreferrer" target="_blank">
+          <svg class="wa-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          <span>مراسلة عبر واتساب</span>
+        </a>
+        <p class="close-wa-hint" id="waHint" hidden>لم يُضبط رقم واتساب بعد في إعدادات الموقع.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -750,7 +994,10 @@ html.js .atlas-item.is-in{opacity:1;transform:none;transition:opacity .62s var(-
 
 <footer class="site-footer">
   <div class="wrap foot">
-    <b>شمس</b>
+    <div class="foot-brand">
+      <b>شمس</b>
+      <p class="foot-tag">للتدعيم العاطفي بالقصة</p>
+    </div>
     <nav aria-label="روابط التذييل"><ul>
       <li><a href="#story">القصة</a></li>
       <li><a href="#about">عن البرنامج</a></li>
@@ -758,14 +1005,39 @@ html.js .atlas-item.is-in{opacity:1;transform:none;transition:opacity .62s var(-
       <li><a href="#method">الورشة</a></li>
       <li><a href="#founder">المؤسِّسة</a></li>
       <li><a href="#close">الختام</a></li>
+      <li><a class="wa-foot-link" id="waFoot" href="https://wa.me/" rel="noopener noreferrer" target="_blank">واتساب</a></li>
     </ul></nav>
   </div>
 </footer>
 
 <script>
+/** واتساب: الرقم بصيغة دولية بدون + أو 00 (مثال: 9705xxxxxxxx) */
+var SHAMS_WHATSAPP_MSISDN = "972507517612";
+
 (function () {
   var root = document.documentElement;
   root.classList.add("js");
+
+  function initWhatsApp() {
+    var msisdn = String(SHAMS_WHATSAPP_MSISDN || "").replace(/\D/g, "");
+    var hint = document.getElementById("waHint");
+    if (!msisdn) {
+      if (hint) hint.hidden = false;
+      var cta = document.getElementById("waCta");
+      var foot = document.getElementById("waFoot");
+      if (cta) cta.hidden = true;
+      if (foot && foot.parentElement) foot.parentElement.hidden = true;
+      return;
+    }
+    if (hint) hint.hidden = true;
+    var text = encodeURIComponent("مرحباً، أود الاستفسار عن إمكانية تطبيق برنامج «شمس — للتدعيم العاطفي بالقصة» في مدرستنا.");
+    var url = "https://wa.me/" + msisdn + "?text=" + text;
+    ["waCta", "waFoot"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.href = url;
+    });
+  }
+  initWhatsApp();
   var header = document.getElementById("top");
   var btn = document.getElementById("menuBtn");
   var btnLabel = btn.querySelector(".menu-btn-label");
