@@ -1,0 +1,24 @@
+# نشر Vercel بدون ربط Git (يعمل حتى مع انقطاع webhooks أو outage GitHub)
+# Vercel → مشروعك → Settings → Git → Deploy Hooks → Create Hook (branch: main)
+# GitHub → Settings → Secrets → Actions → VERCEL_DEPLOY_HOOK = الرابط الكامل
+name: Trigger Vercel deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy-hook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: POST deploy hook
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "::warning::VERCEL_DEPLOY_HOOK غير مضبوط — أضف السر من Vercel Deploy Hooks"
+            exit 0
+          fi
+          curl -fsS -X POST "$HOOK"
+          echo "Vercel deploy triggered."

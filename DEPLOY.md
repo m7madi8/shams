@@ -1,40 +1,48 @@
-# نشر الموقع (Vercel)
+# لماذا لا يظهر Deployment جديد على Vercel؟
 
-## المشكلة الشائعة
+الكود على GitHub **محدّث** (مثلاً `3533e55` وما بعده). إذا Vercel لا ينشر:
 
-الكود على GitHub محدّث لكن **shams-three.vercel.app** يعرض نسخة قديمة ولا يظهر **Deployment** جديد.
+1. **لا يوجد ربط Git** — مستودع `m7madi8/shams` بدون webhooks لـ Vercel (شائع بعد حذف المشروع أو تغيير الحساب).
+2. **Outage GitHub** — رسالة Vercel «Automatic deployments from GitHub may be delayed» تعني انتظر أو انشر يدويًا.
+3. **مشروع Vercel على حساب/فريق آخر** — تحقق أنك في نفس Team الذي يملك `shams-three.vercel.app`.
 
-السبب المعتاد: مشروع Vercel **غير مربوط** بمستودع `m7madi8/shams` (أو انقطع الربط). مستودع GitHub بدون webhooks لـ Vercel = لا نشر تلقائي.
+---
 
-## الحل ١ — إعادة ربط المشروع (مُفضّل)
+## الحل الأسرع: Deploy Hook (دقيقتان)
 
-1. ادخل [vercel.com](https://vercel.com) بنفس الحساب الذي أنشأ `shams-three`.
-2. **Add New… → Project**.
-3. اختر **Import** لمستودع **m7madi8/shams**.
-4. الإعدادات:
-   - **Framework Preset:** Other
-   - **Root Directory:** `./`
-   - **Build Command:** اتركه فارغًا
-   - **Output Directory:** اتركه فارغًا (موقع ثابت)
-5. **Deploy**.
+لا يحتاج إعادة ربط Git كاملًا.
 
-إذا ظهر مشروع مكرر: احذف القديم أو اربط النطاق `shams-three.vercel.app` بالمشروع الجديد من **Settings → Domains**.
+1. **Vercel** → مشروع الموقع → **Settings** → **Git** → **Deploy Hooks**.
+2. **Create Hook** — الاسم: `github-main` — الفرع: `main` — انسخ الرابط.
+3. **GitHub** → `m7madi8/shams` → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**:
+   - الاسم: `VERCEL_DEPLOY_HOOK`
+   - القيمة: الرابط الذي نسخته.
+4. **GitHub** → **Actions** → **Trigger Vercel deploy** → **Run workflow**.
 
-بعد الربط، كل `git push` على `main` يجب أن يظهر Deployment جديد خلال دقيقة.
+بعدها كل `push` على `main` يشغّل الـ workflow ويستدعي Vercel.
 
-## الحل ٢ — GitHub Actions
+تأكد أن **Actions** مفعّلة: **Settings** → **Actions** → **General** → Allow all actions.
 
-إذا لم يعمل الربط من لوحة Vercel، استخدم الـ workflow في `.github/workflows/vercel-deploy.yml`:
+---
 
-1. أنشئ **Vercel Token** (Account Settings → Tokens).
-2. من مشروع shams في Vercel: **Project ID** و **Team ID**.
-3. في GitHub: **Settings → Secrets and variables → Actions** وأضف:
-   - `VERCEL_TOKEN`
-   - `VERCEL_ORG_ID`
-   - `VERCEL_PROJECT_ID`
-4. ادفع أي تغيير على `main` أو شغّل الـ workflow يدويًا من **Actions**.
+## الحل الكامل: إعادة ربط Git في Vercel
 
-## التحقق بعد النشر
+1. **Add New** → **Project** → Import **`m7madi8/shams`**.
+2. Framework: **Other** — بدون Build — بدون Output Directory.
+3. **Deploy**.
+4. اربط النطاق **shams-three.vercel.app** من **Settings** → **Domains** إن لزم.
 
-- https://shams-three.vercel.app/heba.jpg → يجب أن يعيد **200**
-- صفحة المؤسِّسة تعرض صورة **heba.jpg** (وليس `nawal.png`)
+---
+
+## بديل: GitHub Pages (إذا Vercel تعطل)
+
+1. **GitHub** → **Settings** → **Pages** → **Build and deployment** → Source: **GitHub Actions**.
+2. ادفع على `main` أو شغّل workflow **Deploy to GitHub Pages**.
+3. الرابط: `https://m7madi8.github.io/shams/` (الصور النسبية `heba.jpg` تعمل).
+
+---
+
+## بعد أي نشر ناجح
+
+- `…/heba.jpg` → HTTP 200
+- قسم المؤسِّسة يعرض الصورة (بدون `hidden` + `lazy` القديم)
