@@ -637,10 +637,11 @@ main>section[id]{scroll-margin-block-start:calc(var(--header-h) + 14px)}
 .role{margin:0;color:var(--peach);font-weight:500;font-size:clamp(.98rem,1.12vw,1.08rem);line-height:1.5}
 .founder h2{margin:.15em 0 0;color:var(--paper);font-family:var(--display);font-weight:700;font-size:clamp(2.5rem,5.2vw,4.5rem);line-height:1.18}
 .founder-body{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(24px,4vw,36px);align-items:start}
-.founder-body:has(.presence:not([hidden])){grid-template-columns:minmax(0,1fr) minmax(200px,min(300px,34vw));column-gap:clamp(32px,5.5vw,72px);align-items:start}
+.founder-body:has(.presence:not(.presence--missing)){grid-template-columns:minmax(0,1fr) minmax(200px,min(300px,34vw));column-gap:clamp(32px,5.5vw,72px);align-items:start}
 .founder-lede{margin:0 0 1rem;max-width:var(--measure-prose);color:var(--peach);font-weight:500;font-size:clamp(.98rem,1.08vw,1.06rem);line-height:1.78}
 .now{max-width:var(--measure-prose);margin:0;color:rgba(228,222,212,.95);font-size:clamp(1.04rem,1.2vw,1.14rem);line-height:1.9}
 .presence{margin:0;width:100%;max-width:min(300px,100%);justify-self:end;align-self:start}
+.presence--missing{display:none!important}
 .presence-surface{padding:0;border:1px solid rgba(246,201,168,.45);background:var(--paper)}
 .presence-mat{position:relative;padding:clamp(11px,1.6vw,15px);background:var(--paper)}
 .presence-mat::after{content:"";position:absolute;inset:clamp(7px,1.1vw,11px);border:1px solid rgba(31,42,74,.14);pointer-events:none}
@@ -709,7 +710,7 @@ html.js .atlas-item.is-pending{opacity:0;transform:translateY(10px)}
 html.js .atlas-item.is-in{opacity:1;transform:none;transition:opacity .62s var(--ease),transform .62s var(--ease)}
 
 @media (max-width:900px){
-  .founder-body:has(.presence:not([hidden])){grid-template-columns:minmax(0,1fr) minmax(168px,220px)}
+  .founder-body:has(.presence:not(.presence--missing)){grid-template-columns:minmax(0,1fr) minmax(168px,220px)}
 }
 @media (max-width:800px){
   .hero h1{font-size:clamp(4rem,18vw,6rem)}
@@ -720,7 +721,7 @@ html.js .atlas-item.is-in{opacity:1;transform:none;transition:opacity .62s var(-
   .hero-stage{grid-template-columns:minmax(0,1fr)}
 }
 @media (max-width:680px){
-  .founder-body,.founder-body:has(.presence:not([hidden])){grid-template-columns:minmax(0,1fr)}
+  .founder-body,.founder-body:has(.presence:not(.presence--missing)){grid-template-columns:minmax(0,1fr)}
   .presence{order:-1;max-width:min(260px,78vw);justify-self:center;margin-inline:auto}
 }
 @media (max-width:390px){
@@ -961,11 +962,11 @@ html.js .atlas-item.is-in{opacity:1;transform:none;transition:opacity .62s var(-
           </div>
         </div>
       </div>
-      <figure class="presence" hidden>
+      <figure class="presence">
         <div class="presence-surface">
           <div class="presence-mat">
             <div class="presence-portrait">
-              <img src="heba.jpg" alt="هبة شيخ يوسف، مؤسِّسة برنامج شمس" width="960" height="1688" loading="lazy" decoding="async" onerror="this.closest('.presence').hidden=true" onload="this.closest('.presence').removeAttribute('hidden')">
+              <img src="heba.jpg" alt="هبة شيخ يوسف، مؤسِّسة برنامج شمس" width="960" height="1688" loading="eager" decoding="async" fetchpriority="high" onerror="this.closest('.presence').classList.add('presence--missing')">
             </div>
           </div>
         </div>
